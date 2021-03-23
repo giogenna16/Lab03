@@ -18,7 +18,7 @@ public class Model {
 		    try {
 			
 			
-				FileReader fr= new FileReader("English.txt");
+				FileReader fr= new FileReader("src/main/resources/English.txt");
 				BufferedReader br= new BufferedReader(fr);
 				String word;
 				while((word= br.readLine())!= null) {
@@ -26,6 +26,7 @@ public class Model {
 					paroleDizionario.add(word);
 				}
 				br.close();
+				fr.close();
 				
 			  }catch(IOException e) {
 					System.out.println("Errore nella lettura del file");
@@ -35,7 +36,7 @@ public class Model {
 	    if(language.equals("Italiano")) {
 	    	try {
 	    		
-			    FileReader fr= new FileReader("Italian.txt");
+			    FileReader fr= new FileReader("src/main/resources/Italian.txt");
 			    BufferedReader br= new BufferedReader(fr);
 				String word;
 				while((word= br.readLine())!= null) {
@@ -43,6 +44,8 @@ public class Model {
 					paroleDizionario.add(word);
 				}
 				br.close();
+				fr.close();
+				
 			} catch(IOException e) {
 			System.out.println("Errore nella lettura del file");
 		   }
@@ -94,9 +97,9 @@ public class Model {
 	}
 	
 	public void reset() {
-		this.listaRichWord.removeAll(listaRichWord);
-		this.paroleSbagliate.removeAll(paroleSbagliate);
-		this.paroleDizionario.removeAll(paroleDizionario);
+		this.listaRichWord.clear();
+		this.paroleSbagliate.clear();
+		this.paroleDizionario.clear();
 		this.tempo=0;
 	}
 	

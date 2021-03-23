@@ -68,13 +68,13 @@ public class FXMLController {
     
     @FXML
     void handleSpellCheck(ActionEvent event) {
-    	String inputText= this.txtInserisci.getText();
+    	String inputText= this.txtInserisci.getText().toLowerCase();
     	String language= this.comboBoxSelect.getValue();
     	if(language==null) {
     		this.txtResult.setText("Select a language!");
     		
     	}else {
-    		if(inputText.length()==0) {
+    		if(inputText== null) {
     	
     		this.txtResult.setText("Enter at least one word!");
     	}else {
@@ -88,7 +88,7 @@ public class FXMLController {
     	List<String> inputTextList= new ArrayList<>();
     	this.model.loadDictionary(language);
     	
-    	inputText.replaceAll("“[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+    	inputText= inputText.replaceAll("[.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
     	StringTokenizer st = new StringTokenizer(inputText, " ");
 	
     	while(st.hasMoreTokens()) {
