@@ -103,6 +103,13 @@ public class Model {
 		this.tempo=0;
 	}
 	
+	public List<RichWord> spellCheckTextLinear(List<String> inputTextList){
+		/**
+		 * TODO
+		 */
+	}
+	
+	
 	
 	
 	

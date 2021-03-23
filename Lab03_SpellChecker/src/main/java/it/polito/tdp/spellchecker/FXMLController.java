@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
 
 public class FXMLController {
 	
@@ -61,6 +62,7 @@ public class FXMLController {
     	this.btnSpellCheck.setDisable(false);
     	this.txtInserisci.setEditable(true);
     	this.btnClear.setDisable(true);
+    	this.lblErrors.setTextFill(Color.BLACK);
     	this.lblErrors.setText("Number of errors in the text:...");
     	this.lblTime.setText("Time for the spell check:...");
 
@@ -100,12 +102,18 @@ public class FXMLController {
     	this.txtResult.setText(this.model.paroleSbagliate());
     	nErr=this.model.numeroErrori();
     	
-    	if(nErr==0)
+    	if(nErr==0) {
+    		this.lblErrors.setTextFill(Color.GREEN);
     		this.lblErrors.setText("The text does not contain errors");
-    	if(nErr==1)
+    	}
+    	if(nErr==1) {
+    		this.lblErrors.setTextFill(Color.RED);
     		this.lblErrors.setText("The text contains "+ nErr+" error");
-    	if(nErr>1)
+    	}
+    	if(nErr>1) {
+    		this.lblErrors.setTextFill(Color.RED);
     		this.lblErrors.setText("The text contains "+ nErr+" errors");
+    	}
     	
     	
     	this.lblTime.setText("Spell check completed in "+(this.model.getTempo()/1E9)+" s");
