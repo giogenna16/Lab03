@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -35,24 +34,19 @@
                   </ComboBox>
                </children>
             </HBox>
-            <ButtonBar>
-              <buttons>
-                <Button mnemonicParsing="false" prefHeight="25.0" text="List.contains()" />
-                  <Button mnemonicParsing="false" text="Linear search" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Dicothomic search" />
-              </buttons>
-               <VBox.margin>
-                  <Insets right="15.0" />
-               </VBox.margin>
-            </ButtonBar>
             <TextArea fx:id="txtInserisci" prefHeight="129.0" prefWidth="378.0" />
             <HBox>
                <children>
                   <Label text="Wrong words:">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="150.0" top="20.0" />
+                        <Insets bottom="5.0" left="5.0" right="20.0" top="25.0" />
                      </HBox.margin>
                   </Label>
+                  <ComboBox fx:id="comboBoxTipoRicerca" prefWidth="150.0" promptText="Select a search type">
+                     <HBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </HBox.margin>
+                  </ComboBox>
                   <Button fx:id="btnSpellCheck" mnemonicParsing="false" onAction="#handleSpellCheck" text="Spell check">
                      <HBox.margin>
                         <Insets bottom="10.0" left="50.0" top="10.0" />

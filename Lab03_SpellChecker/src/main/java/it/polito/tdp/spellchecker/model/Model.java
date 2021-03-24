@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
@@ -126,8 +127,11 @@ public class Model {
 	
 	public List<RichWord> spellCheckTextDichotomic(List<String> inputTextList){
 		
-		int tentativi= (int)((Math.log(this.paroleDizionario.size()) / Math.log(2))+1);
+		
 		long tempoIniziale=System.nanoTime();
+		int tentativi= (int)((Math.log(this.paroleDizionario.size()) / Math.log(2))+1);
+		String[] paroleDiz=new String[this.paroleDizionario.size()];
+		paroleDiz=this.paroleDizionario.toArray(paroleDiz);
 		
 		for(String s: inputTextList) {
 			RichWord r= new RichWord(s);
@@ -138,7 +142,7 @@ public class Model {
 		
 			for(int i=0; i<tentativi; i++) {
 				media=(int)(min+max)/2;
-				String temp=((String)this.paroleDizionario.toArray()[media]);
+				String temp= paroleDiz[media];
 				if(s.compareTo(temp)==0) {
 					r.setCorrect(true);
 					break;
@@ -161,7 +165,13 @@ public class Model {
 		
 	}
 	
-	
+	/**
+	 * Provando i tre metodi, si nota che la ricerca dicotomica è la più efficiente,
+	 * il List.contain() ha delle prestazioni simili alla ricerca lineare (un po' migliori, ma dello stesso
+	 * ordine di grandezza; la dicotomica ha un tempo minore di un ordine di grandezza almeno).
+	 * La LinkedList con tutte e tre le tipologie di ricerca è risultata meno efficiente rispetto alla
+	 * ArrayList.
+	 */
 	
 	
 	

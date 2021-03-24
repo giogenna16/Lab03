@@ -51,6 +51,9 @@ public class FXMLController {
 
     @FXML
     private Label lblTime;
+    
+    @FXML
+    private ComboBox<String> comboBoxTipoRicerca;
 
     @FXML
     void handleClear(ActionEvent event) {
@@ -60,6 +63,7 @@ public class FXMLController {
     	this.txtResult.clear();
     	this.comboBoxSelect.setDisable(false);
     	this.btnSpellCheck.setDisable(false);
+    	this.comboBoxTipoRicerca.setDisable(false);
     	this.txtInserisci.setEditable(true);
     	this.btnClear.setDisable(true);
     	this.lblErrors.setTextFill(Color.BLACK);
@@ -72,6 +76,7 @@ public class FXMLController {
     void handleSpellCheck(ActionEvent event) {
     	String inputText= this.txtInserisci.getText().toLowerCase();
     	String language= this.comboBoxSelect.getValue();
+    	String searchType= this.comboBoxTipoRicerca.getValue();
     	if(language==null) {
     		this.txtResult.setText("Select a language!");
     		
@@ -79,8 +84,12 @@ public class FXMLController {
     		if(inputText== null) {
     	
     		this.txtResult.setText("Enter at least one word!");
-    	}else {
+    	}if(searchType==null){
+    		this.txtResult.setText("Select a search type!");
+    	}
+    		else {
     	
+        this.comboBoxTipoRicerca.setDisable(true);
     	this.comboBoxSelect.setDisable(true);
     	this.btnSpellCheck.setDisable(true);
     	this.txtInserisci.setEditable(false);
@@ -90,7 +99,7 @@ public class FXMLController {
     	List<String> inputTextList= new ArrayList<>();
     	this.model.loadDictionary(language);
     	
-    	inputText= inputText.replaceAll("[.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+    	inputText= inputText.replaceAll("['.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
     	StringTokenizer st = new StringTokenizer(inputText, " ");
 	
     	while(st.hasMoreTokens()) {
@@ -98,7 +107,13 @@ public class FXMLController {
     		
     	}
     	
-    	this.model.spellCheckTextDichotomic(inputTextList);
+    	if(searchType.equals("Dichotomic search"))
+    	     this.model.spellCheckTextDichotomic(inputTextList);
+    	if(searchType.equals("Linear search"))
+    		this.model.spellCheckTextLinear(inputTextList);
+    	if(searchType.equals("List.contains()"))
+    		this.model.spellCheckText(inputTextList);
+    	
     	this.txtResult.setText(this.model.paroleSbagliate());
     	nErr=this.model.numeroErrori();
     	
@@ -125,6 +140,7 @@ public class FXMLController {
     public void setModel(Model model) {
     	this.model=model;
     	this.comboBoxSelect.getItems().addAll("English", "Italiano");
+    	this.comboBoxTipoRicerca.getItems().addAll("List.contains()", "Linear search", "Dichotomic search");
     }
 
     @FXML
