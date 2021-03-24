@@ -104,10 +104,64 @@ public class Model {
 	}
 	
 	public List<RichWord> spellCheckTextLinear(List<String> inputTextList){
-		/**
-		 * TODO
-		 */
+		long tempoIniziale=System.nanoTime();
+		for(String s: inputTextList) {
+			RichWord r= new RichWord(s);
+			r.setCorrect(false);
+			for(String t: this.paroleDizionario) {
+				if(s.equals(t)) {
+					r.setCorrect(true);
+					break;
+				}
+			
+			}
+			this.listaRichWord.add(r);
+		}
+		
+		long tempoFinale=System.nanoTime();
+		this.tempo=tempoFinale-tempoIniziale;
+		
+		return this.listaRichWord;
 	}
+	
+	public List<RichWord> spellCheckTextDichotomic(List<String> inputTextList){
+		
+		int tentativi= (int)((Math.log(this.paroleDizionario.size()) / Math.log(2))+1);
+		long tempoIniziale=System.nanoTime();
+		
+		for(String s: inputTextList) {
+			RichWord r= new RichWord(s);
+			r.setCorrect(false);
+			int min=0;
+			int max=this.paroleDizionario.size();
+			int media=this.paroleDizionario.size();
+		
+			for(int i=0; i<tentativi; i++) {
+				media=(int)(min+max)/2;
+				String temp=((String)this.paroleDizionario.toArray()[media]);
+				if(s.compareTo(temp)==0) {
+					r.setCorrect(true);
+					break;
+				}
+				if(s.compareTo(temp)>0) {
+					min=media;
+					
+				}
+				if(s.compareTo(temp)<0) {
+					max=media;
+				}	
+			}
+			this.listaRichWord.add(r);	
+		}
+		long tempoFinale=System.nanoTime();
+		this.tempo=tempoFinale-tempoIniziale;
+		
+		return this.listaRichWord;
+		
+		
+	}
+	
+	
 	
 	
 	

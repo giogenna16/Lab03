@@ -98,7 +98,7 @@ public class FXMLController {
     		
     	}
     	
-    	this.model.spellCheckText(inputTextList);
+    	this.model.spellCheckTextDichotomic(inputTextList);
     	this.txtResult.setText(this.model.paroleSbagliate());
     	nErr=this.model.numeroErrori();
     	
