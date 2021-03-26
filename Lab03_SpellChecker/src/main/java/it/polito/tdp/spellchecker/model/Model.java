@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,20 +18,19 @@ public class Model {
 	public void loadDictionary(String language) {
 		
 		if(language.equals("English")){
+			 ComparatoreDiStringhe c= new  ComparatoreDiStringhe();
 		    try {
 			
 				FileReader fr= new FileReader("src/main/resources/English.txt");
 				BufferedReader br= new BufferedReader(fr);
 				String word;
 				while((word= br.readLine())!= null) {
-					/*word= word.replace("-", "");
-					word=word.replace("'", "");
-					word=word.replace(" ", "");*/
+				    word= word.replaceAll("['.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
 					paroleDizionario.add(word.toLowerCase());
 				}
 				br.close();
 				fr.close();
-				
+				Collections.sort(this.paroleDizionario, c);
 			  }catch(IOException e) {
 					System.out.println("Errore nella lettura del file");
 				}
