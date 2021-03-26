@@ -15,16 +15,18 @@ public class Model {
 	
 	
 	public void loadDictionary(String language) {
+		
 		if(language.equals("English")){
 		    try {
-			
 			
 				FileReader fr= new FileReader("src/main/resources/English.txt");
 				BufferedReader br= new BufferedReader(fr);
 				String word;
 				while((word= br.readLine())!= null) {
-					
-					paroleDizionario.add(word);
+					/*word= word.replace("-", "");
+					word=word.replace("'", "");
+					word=word.replace(" ", "");*/
+					paroleDizionario.add(word.toLowerCase());
 				}
 				br.close();
 				fr.close();
@@ -42,7 +44,8 @@ public class Model {
 				String word;
 				while((word= br.readLine())!= null) {
 					
-					paroleDizionario.add(word);
+					
+					paroleDizionario.add(word.toLowerCase());
 				}
 				br.close();
 				fr.close();
@@ -54,17 +57,16 @@ public class Model {
 	}
 	
 	public List<RichWord> spellCheckText(List<String> inputTextList){
+		
 		long tempoIniziale=System.nanoTime();
 		for(String s: inputTextList) {
 			RichWord r= new RichWord(s);
+			r.setCorrect(false);
 			if(this.paroleDizionario.contains(s)) {
 				r.setCorrect(true);
 			}
-			else {
-				r.setCorrect(false);
-			}
 			this.listaRichWord.add(r);
-		}
+		  }
 		long tempoFinale=System.nanoTime();
 		this.tempo=tempoFinale-tempoIniziale;
 		
@@ -129,30 +131,32 @@ public class Model {
 		
 		
 		long tempoIniziale=System.nanoTime();
-		int tentativi= (int)((Math.log(this.paroleDizionario.size()) / Math.log(2))+1);
-		String[] paroleDiz=new String[this.paroleDizionario.size()];
+		int lunghezza=this.paroleDizionario.size();
+		int tentativi= (int)((Math.log(lunghezza) / Math.log(2))+1);
+		String[] paroleDiz=new String[lunghezza];
 		paroleDiz=this.paroleDizionario.toArray(paroleDiz);
 		
 		for(String s: inputTextList) {
 			RichWord r= new RichWord(s);
 			r.setCorrect(false);
 			int min=0;
-			int max=this.paroleDizionario.size();
-			int media=this.paroleDizionario.size();
-		
+			int max=lunghezza;
+			
+					
 			for(int i=0; i<tentativi; i++) {
-				media=(int)(min+max)/2;
+				int media=(int)(min+max)/2;
 				String temp= paroleDiz[media];
 				if(s.compareTo(temp)==0) {
 					r.setCorrect(true);
 					break;
 				}
 				if(s.compareTo(temp)>0) {
-					min=media;
+					min=media; 
 					
 				}
 				if(s.compareTo(temp)<0) {
 					max=media;
+					
 				}	
 			}
 			this.listaRichWord.add(r);	

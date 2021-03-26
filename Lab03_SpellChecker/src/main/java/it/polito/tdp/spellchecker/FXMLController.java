@@ -99,7 +99,7 @@ public class FXMLController {
     	List<String> inputTextList= new ArrayList<>();
     	this.model.loadDictionary(language);
     	
-    	inputText= inputText.replaceAll("['.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+    	inputText= inputText.replaceAll("['.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", " ");
     	StringTokenizer st = new StringTokenizer(inputText, " ");
 	
     	while(st.hasMoreTokens()) {
