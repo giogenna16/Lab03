@@ -9,9 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
-	List<String> paroleDizionario= new ArrayList<>();
-	List<RichWord> listaRichWord= new ArrayList<>();
-	List<RichWord> paroleSbagliate= new ArrayList<>();
+	List<String> paroleDizionario= new LinkedList<>();//ArrayList<>();
+	List<RichWord> listaRichWord= new LinkedList<>();//ArrayList<>();
+	List<RichWord> paroleSbagliate= new LinkedList<>();//ArrayList<>();
 	long tempo=0;
 	
 	
@@ -133,9 +133,7 @@ public class Model {
 		long tempoIniziale=System.nanoTime();
 		int lunghezza=this.paroleDizionario.size();
 		int tentativi= (int)((Math.log(lunghezza) / Math.log(2))+1);
-		String[] paroleDiz=new String[lunghezza];
-		paroleDiz=this.paroleDizionario.toArray(paroleDiz);
-		
+				
 		for(String s: inputTextList) {
 			RichWord r= new RichWord(s);
 			r.setCorrect(false);
@@ -145,7 +143,7 @@ public class Model {
 					
 			for(int i=0; i<tentativi; i++) {
 				int media=(int)(min+max)/2;
-				String temp= paroleDiz[media];
+				String temp= this.paroleDizionario.get(media);
 				if(s.compareTo(temp)==0) {
 					r.setCorrect(true);
 					break;
@@ -170,11 +168,11 @@ public class Model {
 	}
 	
 	/**
-	 * Provando i tre metodi, si nota che la ricerca dicotomica è la più efficiente,
-	 * il List.contain() ha delle prestazioni simili alla ricerca lineare (un po' migliori, ma dello stesso
-	 * ordine di grandezza; la dicotomica ha un tempo minore di un ordine di grandezza almeno).
-	 * La LinkedList con tutte e tre le tipologie di ricerca è risultata meno efficiente rispetto alla
-	 * ArrayList.
+	 * Provando i tre metodi, si nota che la ricerca dicotomica è la più efficiente, quando si utilizza 
+	 * una ArrayList; il List.contain() ha delle prestazioni simili alla ricerca lineare (dello stesso 
+	 * ordine di grandezza; la dicotomica ha un tempo minore di due ordini di grandezza).
+	 * Quando si utilizza una LinkedList, la ricerca dicotomica è la meno efficiente: almeno un ordine di 
+	 * grandezza maggiore rispetto a ricerca lineare e List.contain();
 	 */
 	
 	
